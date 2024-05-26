@@ -40,6 +40,8 @@ enum MenuOption: Int, CaseIterable {
 }
 
 class ConsoleApp {
+    private var graph = Graph()
+    
     private func printMenu() {
         print("Please choose an option:")
         MenuOption.allCases.forEach { print("\($0.rawValue). \($0.description)") }
@@ -52,10 +54,22 @@ class ConsoleApp {
         return nil
     }
     
+    private func loadGraph() {
+        print("Enter the file path to load the graph:")
+        if let filePath = readLine() {
+            graph.loadGraphFromFile(filePath)
+            print(graph.getAdjacencyMatrix())
+        } else {
+            print("Invalid file path.")
+        }
+    }
+    
     private func handleOption(_ option: MenuOption) {
         switch option {
         case .loadGraph:
             print(option.description)
+            loadGraph()
+            
         case .breadthFirstSearch:
             print(option.description)
         case .depthFirstSearch:
