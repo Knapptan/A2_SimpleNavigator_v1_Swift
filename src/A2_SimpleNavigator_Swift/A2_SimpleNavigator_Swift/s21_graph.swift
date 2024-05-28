@@ -49,6 +49,23 @@ class Graph {
     }
     
     func exportGraphToDot(_ filename: String) {
+        // сейчас простой перевод в направленные с весом, нужно переделать
+        // как различать типы матриц смежности?
+        var dotString = "digraph G {\n"
         
+        for i in 0..<verticesCount{
+            for j in 0..<verticesCount{
+                if adjacencyMatrix[i][j] != 0 {
+                    dotString += "    \(i) -> \(j) [label=\(adjacencyMatrix[i][j])];\n"
+                }
+            }
+        }
+        dotString += "}\n"
+        print(dotString)
+        do {
+            try dotString.write(toFile: filename, atomically: true, encoding: .utf8)
+        } catch {
+            print("Error writing file: \(error)")
+        }
     }
 }

@@ -11,11 +11,22 @@ class GraphAlgorithms {
     
     // MARK: - PART 1
     
+    // Поиск в глубину
     func depthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
+        var stack = Stack<Int>()
         return []
     }
     
+    // Поиск в ширину
     func breadthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
+        // только задал начало для алгоритма
+        var queue = Queue<Int>()
+        var visitetNodes = Set<Int>()
+        var distances = [Int]()
+        var parents = [Int]()
+        
+        queue.push(startVertex)
+
         return []
     }
     
