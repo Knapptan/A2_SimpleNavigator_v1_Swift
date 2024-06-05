@@ -10,6 +10,10 @@ import Foundation
 class Graph {
     private var adjacencyMatrix: [[Int]]
     private var verticesCount: Int
+    // флаги типа графа
+    private var isDirected: Bool = false
+    private var isWeighted: Bool = false
+    
     
     init() {
         self.adjacencyMatrix = []
@@ -39,6 +43,7 @@ class Graph {
                     adjacencyMatrix[i][j] = weight
                 }
             }
+            determineGraphProperties() // проверка типа графа
         } catch {
             print("Error reading file: \(error)")
         }
@@ -48,24 +53,54 @@ class Graph {
         return adjacencyMatrix
     }
     
-    func exportGraphToDot(_ filename: String) {
-        // сейчас простой перевод в направленные с весом, нужно переделать
-        // как различать типы матриц смежности?
-        var dotString = "digraph G {\n"
+    // определение является ли граф взвешенным направленным
+    private func determineGraphProperties() {
+        isDirected = false
+        isWeighted = false
         
-        for i in 0..<verticesCount{
-            for j in 0..<verticesCount{
+        for i in 0..<verticesCount {
+            for j in 0..<verticesCount {
+                if adjacencyMatrix[i][j] != adjacencyMatrix[j][i] {
+                    isDirected = true
+                }
+                if adjacencyMatrix[i][j] > 1 {
+                    isWeighted = true
+                }
+            }
+        }
+    }
+    
+    // переваод в дот формат
+    func exportGraphToDot(_ filename: String) {
+        var dotString: String
+        
+        // если направленный то заголовок с приставкой ди
+        if isDirected {
+            dotString = "digraph \(filename){\n"
+        } else {
+            dotString = "graph \(filename){\n"
+        }
+        // указатель связи зависит от типа
+        let connection = isDirected ? "->" : "--"
+        
+        for i in 0..<verticesCount {
+            for j in 0..<verticesCount {
                 if adjacencyMatrix[i][j] != 0 {
-                    dotString += "    \(i) -> \(j) [label=\(adjacencyMatrix[i][j])];\n"
+                    // условие для проверки если граф неориентированный i < j обеспечит добавление только одной из двух симметричных версий ребра
+                    if isDirected || i < j {
+                        let weightString = isWeighted ? " [weight=\(adjacencyMatrix[i][j])]" : ""
+                        dotString += "    \(i) \(connection) \(j)\(weightString);\n"
+                    }
                 }
             }
         }
         dotString += "}\n"
-        print(dotString)
+        
         do {
             try dotString.write(toFile: filename, atomically: true, encoding: .utf8)
         } catch {
             print("Error writing file: \(error)")
         }
     }
+    
 }
