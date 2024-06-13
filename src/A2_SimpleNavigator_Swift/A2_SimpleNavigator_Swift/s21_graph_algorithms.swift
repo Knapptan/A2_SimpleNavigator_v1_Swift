@@ -18,16 +18,48 @@ class GraphAlgorithms {
     }
     
     // Поиск в ширину
-    func breadthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
-        // только задал начало для алгоритма
-        var queue = Queue<Int>()
-        var visitetNodes = Set<Int>()
-        var distances = [Int]()
-        var parents = [Int]()
+    func breadthFirstSearch(graph: Graph, startVertex: Int) -> [Int]? {
+        guard startVertex >= 0 && startVertex < graph.getVerticesCount() else {
+            print("Error: Start vertex \(startVertex) is out of bounds.")
+            return nil
+        }
         
+        // Очередь обработки
+        var queue = Queue<Int>()
+        // Посещенные вершины
+        var visitedNodes = Set<Int>()
+        // Последовательность посещения
+        var orderOfVisit = [Int]()
+        // Количество вершин
+        let verticesCount = graph.getVerticesCount()
+        // расстояния от начальной вершины
+        // длиной в колличество вершин, -1 - вершина на посещалась
+        var distances = [Int](repeating: -1, count: verticesCount)
+        // массив опциональных родительских вершин
+        var parents = [Int?](repeating: nil, count: verticesCount)
+        
+    //    Начальная инициализация BFS
         queue.push(startVertex)
+        visitedNodes.insert(startVertex)
+        distances[startVertex] = 0
 
-        return []
+        while !queue.isEmpty(){
+            if let currentVertex = queue.pop(){
+                orderOfVisit.append(currentVertex)
+                for neighbor in 0..<verticesCount {
+                    if graph.getAdjacencyMatrix()[currentVertex][neighbor] != 0 && !visitedNodes.contains(neighbor) {
+                        queue.push(neighbor)
+                        visitedNodes .insert(neighbor)
+                        distances[neighbor] = distances[currentVertex] + 1
+                        parents[neighbor] = currentVertex
+//                        print("Visiting node \(neighbor) from node \(currentVertex), setting distance: \(distances[neighbor]), parent: \(currentVertex)")
+                    }
+                }
+            }
+        }
+//        print(visitedNodes)
+//        print(distances)
+        return orderOfVisit
     }
     
     // MARK: - PART 2

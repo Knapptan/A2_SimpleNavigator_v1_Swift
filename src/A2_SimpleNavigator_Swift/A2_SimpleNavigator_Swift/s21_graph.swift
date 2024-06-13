@@ -20,6 +20,11 @@ class Graph {
         self.verticesCount = 0
     }
     
+    init(verticesCount: Int) {
+        self.verticesCount = verticesCount
+        self.adjacencyMatrix = Array(repeating: Array(repeating: 0, count: verticesCount), count: verticesCount)
+    }
+    
     func loadGraphFromFile(_ filename: String) {
         do {
             let fileContents = try String(contentsOfFile: filename)
@@ -51,6 +56,10 @@ class Graph {
     
     func getAdjacencyMatrix() -> [[Int]] {
         return adjacencyMatrix
+    }
+    
+    func getVerticesCount() -> Int {
+        return verticesCount
     }
     
     // определение является ли граф взвешенным направленным
