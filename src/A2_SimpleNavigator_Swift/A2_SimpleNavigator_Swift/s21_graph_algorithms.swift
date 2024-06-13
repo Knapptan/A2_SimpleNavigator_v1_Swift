@@ -13,15 +13,45 @@ class GraphAlgorithms {
     
     // Поиск в глубину
     func depthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
+        guard startVertex >= 0 && startVertex < graph.getVerticesCount() else {
+            print("Error: Start vertex \(startVertex) is out of bounds.")
+            return []
+        }
+        // Стек обработки
         var stack = Stack<Int>()
-        return []
+        // Посещенные вершины
+        var visitedNodes = Set<Int>()
+        // Последовательность посещения
+        var orderOfVisit = [Int]()
+        
+        // Начальная инициализация DFS
+        stack.push(startVertex)
+        
+        while !stack.isEmpty() {
+            if let currentVertex = stack.pop() {
+                if !visitedNodes.contains(currentVertex){
+                    visitedNodes.insert(currentVertex)
+                    orderOfVisit.append(currentVertex)
+                    
+                    for neighbor in (0..<graph.getVerticesCount()).reversed() {
+                        if graph.getAdjacencyMatrix()[currentVertex][neighbor] != 0 && !visitedNodes.contains(neighbor){
+                            stack.push(neighbor)
+                        }
+//                        print("Visiting node \(neighbor) from node \(currentVertex)")
+                    }
+                }
+            }
+        }
+        //        print(visitedNodes)
+        //        print(distances)
+        return orderOfVisit
     }
     
     // Поиск в ширину
-    func breadthFirstSearch(graph: Graph, startVertex: Int) -> [Int]? {
+    func breadthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
         guard startVertex >= 0 && startVertex < graph.getVerticesCount() else {
             print("Error: Start vertex \(startVertex) is out of bounds.")
-            return nil
+            return []
         }
         
         // Очередь обработки
