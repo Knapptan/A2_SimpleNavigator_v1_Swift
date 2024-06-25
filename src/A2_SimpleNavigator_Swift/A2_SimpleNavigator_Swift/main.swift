@@ -41,6 +41,7 @@ enum MenuOption: Int, CaseIterable {
 
 class ConsoleApp {
     private var graph = Graph()
+    private var graph_algos = GraphAlgorithms()
     
     private func printMenu() {
         print("Please choose an option:")
@@ -56,12 +57,17 @@ class ConsoleApp {
     
     private func loadGraph() {
         print("Enter the file path to load the graph:")
-        if let filePath = readLine() {
-            graph.loadGraphFromFile(filePath)
-            print(graph.getAdjacencyMatrix())
-        } else {
-            print("Invalid file path.")
-        }
+        
+        // TODO: раскомментить
+//        if let filePath = readLine() {
+//            graph.loadGraphFromFile(filePath)
+//            print(graph.getAdjacencyMatrix())
+//        } else {
+//            print("Invalid file path.")
+//        }
+        
+        graph.loadGraphFromFile("graph11.txt")
+        graph.getAdjacencyMatrix().forEach{print($0)}
     }
     
     private func handleOption(_ option: MenuOption) {
@@ -72,12 +78,24 @@ class ConsoleApp {
             
         case .breadthFirstSearch:
             print(option.description)
+            let tmparray1 = graph_algos.breadthFirstSearch(graph: graph, startVertex: 1)
+            tmparray1.forEach{print($0)}
+            
         case .depthFirstSearch:
             print(option.description)
+            let tmparray2 = graph_algos.depthFirstSearch(graph: graph, startVertex: 1)
+            tmparray2.forEach{print($0)}
+            
         case .shortestPathBetweenTwoVertices:
             print(option.description)
+            let shortestPath = graph_algos.getShortestPathBetweenVertices(graph: graph, vertex1: 1, vertex2: 7)
+            print(shortestPath ?? -1)
+            
         case .shortestPathsBetweenAllPairs:
             print(option.description)
+            let tmparray3 = graph_algos.getShortestPathsBetweenAllVertices(graph: graph)
+            tmparray3.forEach{print($0)}
+            
         case .minimumSpanningTree:
             print(option.description)
         case .solveTSP:

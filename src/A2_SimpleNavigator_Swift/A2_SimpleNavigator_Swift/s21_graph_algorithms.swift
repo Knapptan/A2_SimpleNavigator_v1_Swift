@@ -87,7 +87,7 @@ class GraphAlgorithms {
     }
     
     // MARK: - PART 2
-    static func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int? {
+     func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int? {
         let verticesCount = graph.getVerticesCount()
         
         // проверка что вершины в пределах графа
@@ -143,40 +143,38 @@ class GraphAlgorithms {
         return distances[vertex2]
     }
     
-    class GraphAlgorithms {
-        static func getShortestPathsBetweenAllVertices(graph: Graph) -> [[Int]] {
-            let verticesCount = graph.getVerticesCount()
-            let adjacencyMatrix = graph.getAdjacencyMatrix()
-            let inf = Int.max
-            
-            // Инициализация мтарицы расстояний
-            var dist = Array(repeating: Array(repeating: inf, count: verticesCount), count: verticesCount)
-            
-            // Заполняем главную диагональ нулями и переносим имеющиеся значения из матрицы смежности
+     func getShortestPathsBetweenAllVertices(graph: Graph) -> [[Int]] {
+        let verticesCount = graph.getVerticesCount()
+        let adjacencyMatrix = graph.getAdjacencyMatrix()
+        let inf = Int.max
+        
+        // Инициализация мтарицы расстояний
+        var dist = Array(repeating: Array(repeating: inf, count: verticesCount), count: verticesCount)
+        
+        // Заполняем главную диагональ нулями и переносим имеющиеся значения из матрицы смежности
+        for i in 0..<verticesCount {
+            for j in 0..<verticesCount {
+                if i == j {
+                    dist[i][j] = 0
+                } else if adjacencyMatrix[i][j] != 0 {
+                    dist[i][j] = adjacencyMatrix[i][j]
+                }
+            }
+        }
+        
+        // Алгоритм Флойда-Уоршелла
+        // Если путь через вершину k короче текущего известного пути от i до j, обновляем dist
+        for k in 0..<verticesCount {
             for i in 0..<verticesCount {
                 for j in 0..<verticesCount {
-                    if i == j {
-                        dist[i][j] = 0
-                    } else if adjacencyMatrix[i][j] != 0 {
-                        dist[i][j] = adjacencyMatrix[i][j]
+                    if dist[i][k] != inf && dist[k][j] != inf && dist[i][k] + dist[k][j] < dist[i][j] {
+                        dist[i][j] = dist[i][k] + dist[k][j]
                     }
                 }
             }
-            
-            // Алгоритм Флойда-Уоршелла
-            // Если путь через вершину k короче текущего известного пути от i до j, обновляем dist
-            for k in 0..<verticesCount {
-                for i in 0..<verticesCount {
-                    for j in 0..<verticesCount {
-                        if dist[i][k] != inf && dist[k][j] != inf && dist[i][k] + dist[k][j] < dist[i][j] {
-                            dist[i][j] = dist[i][k] + dist[k][j]
-                        }
-                    }
-                }
-            }
-            
-            return dist
         }
+        
+        return dist
     }
     // MARK: - PART 3
     

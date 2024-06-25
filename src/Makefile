@@ -6,7 +6,8 @@ DOCS = docsA2
 all: install
 
 install:
-	$(CXX) A2_SimpleNavigator_Swift/A2_SimpleNavigator_Swift/main.swift -o $(APPNAME)
+	$(CXX) A2_SimpleNavigator_Swift/A2_SimpleNavigator_Swift/*.swift -o $(APPNAME)
+	./$(APPNAME)
 
 clean:
 	
