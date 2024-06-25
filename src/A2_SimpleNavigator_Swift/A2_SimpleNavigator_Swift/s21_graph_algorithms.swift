@@ -87,7 +87,7 @@ class GraphAlgorithms {
     }
     
     // MARK: - PART 2
-     func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int? {
+    func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int? {
         let verticesCount = graph.getVerticesCount()
         
         // проверка что вершины в пределах графа
@@ -143,7 +143,7 @@ class GraphAlgorithms {
         return distances[vertex2]
     }
     
-     func getShortestPathsBetweenAllVertices(graph: Graph) -> [[Int]] {
+    func getShortestPathsBetweenAllVertices(graph: Graph) -> [[Int]] {
         let verticesCount = graph.getVerticesCount()
         let adjacencyMatrix = graph.getAdjacencyMatrix()
         let inf = Int.max

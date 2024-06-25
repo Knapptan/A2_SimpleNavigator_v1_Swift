@@ -15,6 +15,7 @@ enum MenuOption: Int, CaseIterable {
     case shortestPathsBetweenAllPairs = 5
     case minimumSpanningTree = 6
     case solveTSP = 7
+    case exportToDot = 8
     case exit = 0
     
     var description: String {
@@ -33,6 +34,8 @@ enum MenuOption: Int, CaseIterable {
             return "Search for the minimum spanning tree in the graph and print the resulting adjacency matrix."
         case .solveTSP:
             return "Solve the Salesman problem and print the resulting route and its length."
+        case .exportToDot:
+            return "Export loeaded graph to dot format"
         case .exit:
             return "Exit the program."
         }
@@ -56,18 +59,18 @@ class ConsoleApp {
     }
     
     private func loadGraph() {
-        print("Enter the file path to load the graph:")
+        print("Enter the file path to load the graph or leave it empty for default graph:")
         
-        // TODO: раскомментить
-//        if let filePath = readLine() {
-//            graph.loadGraphFromFile(filePath)
-//            print(graph.getAdjacencyMatrix())
-//        } else {
-//            print("Invalid file path.")
-//        }
+        var filePath: String = ""
+        filePath = readLine() ?? ""
         
-        graph.loadGraphFromFile("graph11.txt")
-        graph.getAdjacencyMatrix().forEach{print($0)}
+        if filePath.isEmpty {
+            filePath = "graph11.txt"
+            graph.loadGraphFromFile(filePath)
+            graph.getAdjacencyMatrix().forEach{print($0)}
+        } else {
+            print("Invalid file path.")
+        }
     }
     
     private func handleOption(_ option: MenuOption) {
@@ -78,18 +81,27 @@ class ConsoleApp {
             
         case .breadthFirstSearch:
             print(option.description)
-            let tmparray1 = graph_algos.breadthFirstSearch(graph: graph, startVertex: 1)
-            tmparray1.forEach{print($0)}
+            print("Enter vertex:")
+            if let v1 = readUserInput() {
+                let tmparray1 = graph_algos.breadthFirstSearch(graph: graph, startVertex: v1)
+                tmparray1.forEach{print($0)}
+            }
             
         case .depthFirstSearch:
             print(option.description)
-            let tmparray2 = graph_algos.depthFirstSearch(graph: graph, startVertex: 1)
-            tmparray2.forEach{print($0)}
+            print("Enter vertex:")
+            if let v1 = readUserInput() {
+                let tmparray2 = graph_algos.depthFirstSearch(graph: graph, startVertex: v1)
+                tmparray2.forEach{print($0)}
+            }
             
         case .shortestPathBetweenTwoVertices:
             print(option.description)
-            let shortestPath = graph_algos.getShortestPathBetweenVertices(graph: graph, vertex1: 1, vertex2: 7)
-            print(shortestPath ?? -1)
+            print("Enter two vertexes:")
+            if let v1 = readUserInput(), let v2 = readUserInput() {
+                let shortestPath = graph_algos.getShortestPathBetweenVertices(graph: graph, vertex1: v1, vertex2: v2)
+                print(shortestPath ?? -1)
+            }
             
         case .shortestPathsBetweenAllPairs:
             print(option.description)
@@ -100,6 +112,11 @@ class ConsoleApp {
             print(option.description)
         case .solveTSP:
             print(option.description)
+            
+        case .exportToDot:
+            print(option.description)
+            graph.exportGraphToDot("graph_.dot")
+            
         case .exit:
             print("Exiting the program.")
         }

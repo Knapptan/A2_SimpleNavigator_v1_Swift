@@ -14,7 +14,6 @@ class Graph {
     private var isDirected: Bool = false
     private var isWeighted: Bool = false
     
-    
     init() {
         self.adjacencyMatrix = []
         self.verticesCount = 0
