@@ -65,11 +65,11 @@ class GraphAlgorithms {
         // массив опциональных родительских вершин
         var parents = [Int?](repeating: nil, count: verticesCount)
         
-    //    Начальная инициализация BFS
+        //    Начальная инициализация BFS
         queue.push(startVertex)
         visitedNodes.insert(startVertex)
         distances[startVertex] = 0
-
+        
         while !queue.isEmpty(){
             if let currentVertex = queue.pop(){
                 orderOfVisit.append(currentVertex)
@@ -87,46 +87,62 @@ class GraphAlgorithms {
     }
     
     // MARK: - PART 2
-    // почему-то не отрабатывает как надо, нужно переделать под сет каскадов
-    func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int{
+    static func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int? {
         let verticesCount = graph.getVerticesCount()
-        guard vertex1 >= 0 && vertex1 < verticesCount && vertex2 >= 0 && vertex2 < verticesCount else {
+        
+        // проверка что вершины в пределах графа
+        guard vertex1 >= 0, vertex1 < verticesCount, vertex2 >= 0,vertex2 < verticesCount else {
             print("Error: One or both vertices are out of bounds.")
-            return Int.max
+            return nil
         }
         
+        // Создаем массив расстояний до вершин и заполняем услоной бесконечностью - инт макс
         var distances = [Int](repeating: Int.max, count: verticesCount)
+        // Обновляем расстояние до начальной вершины оно равно 0
         distances[vertex1] = 0
         
+        // Создаем массив родителей и заполняем нилл (не обязательная часть алгоритма)
         var parents = [Int?](repeating: nil, count: verticesCount)
         
-        var priorityQueue = PriorityQueue<(vertex: Int, distance: Int)> { $0.distance < $1.distance}
-        priorityQueue.enqueue((vertex: vertex1, distance: 0))
+        // Создаем очередь приоритетов которая сотрирует вершины по дистанции до вершины
+        var priorityQueue = PriorityQueue<VertexDistance>()
+        // Добавляем первую вершину с 0 дистаницей
+        priorityQueue.enqueue(VertexDistance(vertex: vertex1, distance: 0), priority: 0)
         
+        // Цикл пока приоритетная очередь не опустеет
         while !priorityQueue.isEmpty() {
-            guard let (currentVertex, currentDistance) = priorityQueue.dequeue() else {continue}
+            // Извлекаем элемент из очереди приоритетов это кортеж с вершиной ирасстоянием до нее
+            guard let currentVertexDistance = priorityQueue.dequeue() else { break }
+            // Извлекакем вершину
+            let currentVertex = currentVertexDistance.vertex
+            // Извлекаем расстояние
+            let currentDistance = currentVertexDistance.distance
             
-            if currentVertex == vertex1 {
-                return currentDistance
+            // Если извлеченное расстояние больше уже известного минимального расстояния до текущей вершины, то текущий путь не оптимален
+            if currentDistance > distances[currentVertex] {
+                continue
             }
             
+            // перебор соседей вершины
             for neighbor in 0..<verticesCount {
+                //  проходимся по массиву соседей и получаем вес ребра между текущей вершиной и её соседом
                 let weight = graph.getAdjacencyMatrix()[currentVertex][neighbor]
-                
-                if weight > 0 {
+                if weight != 0 {
                     let newDistance = currentDistance + weight
+                    // Если новое рассчитанное расстояние меньше текущего известного минимального расстояния до соседа, то обновляем минимальное расстояние до соседа.
                     if newDistance < distances[neighbor] {
                         distances[neighbor] = newDistance
+                        //Обновляем родительскую вершину для соседа, чтобы позже можно было восстановить кратчайший путь.
                         parents[neighbor] = currentVertex
-                        priorityQueue.enqueue((vertex: neighbor, distance: newDistance))
+                        //Добавляем соседа в очередь приоритетов с обновленным расстоянием. Это гарантирует, что сосед будет обработан позже с учетом нового минимального расстояния.
+                        priorityQueue.enqueue(VertexDistance(vertex: neighbor, distance: newDistance), priority: newDistance)
                     }
                 }
             }
         }
-        
         return distances[vertex2]
     }
-
+    
     func getShortestPathsBetweenAllVertices(graph: Graph) {
         
     }
