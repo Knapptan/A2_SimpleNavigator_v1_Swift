@@ -178,8 +178,57 @@ class GraphAlgorithms {
     }
     // MARK: - PART 3
     
-    func getLeastSpanningTree(graph: Graph) {
+    func getLeastSpanningTree(graph: Graph, startVertex: Int = 3) -> [[Int]] {
+        let adjacencyMatrix = graph.getAdjacencyMatrix()
+        let verticesCount = graph.getVerticesCount()
         
+        guard startVertex >= 0 && startVertex < verticesCount else {
+            print("Error: Starting vertex out of range.")
+            return []
+        }
+        
+        var key = Array(repeating: Int.max, count: verticesCount)
+        var parent = Array(repeating: -1, count: verticesCount)
+        var SpanningTreeArray = Array(repeating: false, count: verticesCount)
+        
+        key[startVertex] = 0
+        parent[startVertex] = -1
+        
+        for _ in 0..<verticesCount-1 {
+            let j = minKey(keys: key, mstSet: SpanningTreeArray)
+            SpanningTreeArray[j] = true
+            
+            for i in 0..<verticesCount {
+                if adjacencyMatrix[j][i] != 0 && !SpanningTreeArray[i] && adjacencyMatrix[j][i] < key[i] {
+                    parent[i] = j
+                    key[i] = adjacencyMatrix[j][i]
+                }
+            }
+        }
+        
+        var LeastSpanningTreeAdjacencyMatrix = Array(repeating: Array(repeating: 0, count: verticesCount), count: verticesCount)
+        
+        for i in 0..<verticesCount {
+            if parent[i] != -1 {
+                LeastSpanningTreeAdjacencyMatrix[parent[i]][i] = adjacencyMatrix[parent[i]][i]
+                LeastSpanningTreeAdjacencyMatrix[i][parent[i]] = adjacencyMatrix[i][parent[i]]
+            }
+        }
+        
+        return LeastSpanningTreeAdjacencyMatrix
+    }
+    
+    private func minKey(keys: [Int], mstSet: [Bool]) -> Int {
+        var min = Int.max
+        var minIndex = -1
+        
+        for i in 0..<keys.count {
+            if mstSet[i] == false && keys[i] < min {
+                min = keys[i]
+                minIndex = i
+            }
+        }
+        return minIndex
     }
     
     // MARK: - PART 4

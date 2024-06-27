@@ -65,7 +65,7 @@ class ConsoleApp {
         filePath = readLine() ?? ""
         
         if filePath.isEmpty {
-            filePath = "graph11.txt"
+            filePath = "graph22.txt"
             graph.loadGraphFromFile(filePath)
             graph.getAdjacencyMatrix().forEach{print($0)}
         } else {
@@ -110,6 +110,9 @@ class ConsoleApp {
             
         case .minimumSpanningTree:
             print(option.description)
+            let tmparray4 = graph_algos.getLeastSpanningTree(graph: graph)
+            tmparray4.forEach{print($0)}
+            
         case .solveTSP:
             print(option.description)
             
