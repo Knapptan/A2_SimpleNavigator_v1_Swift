@@ -233,7 +233,123 @@ class GraphAlgorithms {
     
     // MARK: - PART 4
     
-    func solveTravelingSalesmanProblem(graph: Graph) {
+    func solveTravelingSalesmanProblem(graph: Graph) -> TsmResult {
+        let verticesCount = graph.getVerticesCount()
+        let alpha = 1.0 // Влияние феромона
+        let beta = 5.0 // Влияние эвристической функции (обратное расстояние)
+        let evaporationRate = 0.5 // Коэффициент испарения феромона
+        let initialPheromone = 1.0 // Начальное значение ферамонов
+        let numAnts = verticesCount // Количество муравьев в каждой итерации
+        let maxIterations = verticesCount * 100 // Максимальное количество итераций
         
+        // Инициализация матрицы феромонов
+        var pheromones = Array(repeating: Array(repeating: initialPheromone, count: verticesCount), count: verticesCount)
+        
+        var bestPath: [Int] = [] // Переменная для хранения лучшего пути
+        var bestDistance = Double.infinity // Переменная для хранения длины лучшего пути
+        
+        // В каждой итерации создается множество муравьев, каждый из которых строит свой путь, посещая все вершины
+        for _ in 0..<maxIterations {
+        
+            var allPaths: [[Int]] = [] // Массив для хранения всех путей, найденных муравьями
+            var allDistances: [Double] = [] // Массив для хранения расстояний для всех путей
+            
+            // Цикл для создания и движения каждого муравья
+            for _ in 0..<numAnts {
+                var visited = Set<Int>() // Множество для хранения посещенных вершин
+                var path: [Int] = [] // Массив для хранения пути муравья
+                var currentVertex = Int.random(in: 0..<verticesCount) // Случайный выбор начальной вершины
+                path.append(currentVertex) // Добавление начальной вершины в путь
+                visited.insert(currentVertex) // Отправление начальной вершины в посещенные
+                
+                // Цикл, пока все вершины не будут посещены
+                while visited.count < verticesCount {
+                    // Выбор следующей вершины на основе вероятностей
+                    let nextVertex = selectNextVertex(from: currentVertex, graph: graph, pheromones: pheromones, visited: visited, alpha: alpha, beta: beta)
+                    // Записть каждой посещенной вернины
+                    path.append(nextVertex)
+                    visited.insert(nextVertex)
+                    currentVertex = nextVertex // Рассмотрение следующей вершины
+                }
+                
+                path.append((path[0])) // / Возвращение к начальной вершине
+                let distance = calculatePathDistance(path: path, graph: graph) // Вычисление длины пути
+                 allPaths.append(path) // Сохранение пути
+                 allDistances.append(distance) // Сохранение длины пути
+                
+                // Обновление лучшего пути и его длины
+                if distance < bestDistance {
+                    bestPath = path
+                    bestDistance = distance
+                }
+            }
+            
+            // Испарение феромонов
+            for i in 0..<verticesCount {
+                for j in 0..<verticesCount{
+                    pheromones[i][j] *= (1.0 - evaporationRate)
+                }
+            }
+            
+            // Обновление феромонов на основе пройденных путей
+            for (path, distance) in zip(allPaths, allDistances) {
+                for i in 0..<(path.count - 1) {
+                    let from = path[i]
+                    let to = path[i + 1]
+                    pheromones[from][to] = 1.0 / distance
+                    pheromones[to][from] = 1.0 / distance
+                }
+            }
+        }
+        // Возвращение результата - лучший найденный путь и его длина
+        return TsmResult(vertices: bestPath, distance: bestDistance)
     }
+    
+    //  Для каждой вершины вычисляется вероятность на основе феромонов и эвристической функции
+    private func selectNextVertex(from currentVertex: Int, graph: Graph , pheromones: [[Double]], visited: Set<Int>, alpha: Double, beta: Double) -> Int {
+        let verticesCount = graph.getVerticesCount()
+        let adjacencyMatrix = graph.getAdjacencyMatrix()
+        
+        var probabilities: [Double] = [] // Массив для хранения вероятностей выбора вершин
+        var totalProbability = 0.0 // Общая сумма вероятностей
+        
+        // Вычисление вероятностей выбора каждой вершины
+        for vertex in 0..<verticesCount {
+            // Вычисляем если не посещали вершину
+            if !visited.contains(vertex) {
+                let pheromone = pheromones[currentVertex][vertex] // Извлечение значения феромона
+                let distance = Double(adjacencyMatrix[currentVertex][vertex]) // Извлечение расстояния
+                let probability = pow(pheromone, alpha) * pow(1.0 / distance, beta) // Вычисление вероятности выбора вершины
+                probabilities.append(probability) // Добавление вероятности в массив
+                totalProbability += probability // Обновление общей суммы вероятностей
+            } else {
+                probabilities.append(0.0) // Обработка уже посещенных вершин - не будем посещать
+            }
+        }
+        
+        // Случайный выбор вершины на основе вероятностей
+        let randomValue = Double.random(in: 0..<totalProbability)
+        var cumulativeProbability = 0.0
+        
+        for (vertex, probability) in probabilities.enumerated() {
+            cumulativeProbability += probability
+            if randomValue <= cumulativeProbability {
+                return vertex
+            }
+        }
+        return currentVertex
+    }
+    
+    // Метод для вычисления длины пути - просто складываем расстояния между точками в пути
+    private func calculatePathDistance(path: [Int], graph: Graph) -> Double {
+        let adjacencyMatrix = graph.getAdjacencyMatrix()
+        var distance = 0.0
+        
+        for i in 0..<(path.count - 1) {
+            distance += Double(adjacencyMatrix[path[i]][path[i + 1]])
+        }
+        
+        return distance
+    }
+
 }

@@ -8,6 +8,6 @@
 import Foundation
 
 struct TsmResult {
-    var vertices: [Int]
-    var distance: Double
+    var vertices: [Int] // массив с искомым маршрутом (с порядком обхода вершин).
+    var distance: Double // длина этого маршрута
 }
