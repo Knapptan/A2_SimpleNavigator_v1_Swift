@@ -233,14 +233,17 @@ class GraphAlgorithms {
     
     // MARK: - PART 4
     
-    func solveTravelingSalesmanProblem(graph: Graph) -> TsmResult {
+    func solveTravelingSalesmanProblem(graph: Graph) -> TsmResult? {
         let verticesCount = graph.getVerticesCount()
         let alpha = 1.0 // Влияние феромона
         let beta = 5.0 // Влияние эвристической функции (обратное расстояние)
         let evaporationRate = 0.5 // Коэффициент испарения феромона
         let initialPheromone = 1.0 // Начальное значение ферамонов
         let numAnts = verticesCount // Количество муравьев в каждой итерации
-        let maxIterations = verticesCount * 100 // Максимальное количество итераций
+        var maxIterations = 100 // Если слишком малое число вершин, то 100 итераций
+        if verticesCount > 10{
+            maxIterations = verticesCount * 10 // Максимальное количество итераций
+        }
         
         // Инициализация матрицы феромонов
         var pheromones = Array(repeating: Array(repeating: initialPheromone, count: verticesCount), count: verticesCount)
@@ -305,8 +308,7 @@ class GraphAlgorithms {
         return TsmResult(vertices: bestPath, distance: bestDistance)
     }
     
-    //  Для каждой вершины вычисляется вероятность на основе феромонов и эвристической функции
-    private func selectNextVertex(from currentVertex: Int, graph: Graph , pheromones: [[Double]], visited: Set<Int>, alpha: Double, beta: Double) -> Int {
+    private func selectNextVertex(from currentVertex: Int, graph: Graph, pheromones: [[Double]], visited: Set<Int>, alpha: Double, beta: Double) -> Int {
         let verticesCount = graph.getVerticesCount()
         let adjacencyMatrix = graph.getAdjacencyMatrix()
         
@@ -315,7 +317,7 @@ class GraphAlgorithms {
         
         // Вычисление вероятностей выбора каждой вершины
         for vertex in 0..<verticesCount {
-            // Вычисляем если не посещали вершину
+            // Вычисляем только для непосещенных вершин
             if !visited.contains(vertex) {
                 let pheromone = pheromones[currentVertex][vertex] // Извлечение значения феромона
                 let distance = Double(adjacencyMatrix[currentVertex][vertex]) // Извлечение расстояния
@@ -323,12 +325,24 @@ class GraphAlgorithms {
                 probabilities.append(probability) // Добавление вероятности в массив
                 totalProbability += probability // Обновление общей суммы вероятностей
             } else {
-                probabilities.append(0.0) // Обработка уже посещенных вершин - не будем посещать
+                probabilities.append(0.0) // Для уже посещенных вершин вероятность равна 0
+            }
+        }
+        
+        // Проверка, что totalProbability не равен нулю
+        if totalProbability == 0.0 {
+            // Если нет допустимых вероятностей, возвращаем случайную непосещенную вершину
+            let unvisitedVertices = (0..<verticesCount).filter { !visited.contains($0) }
+            if let randomUnvisited = unvisitedVertices.randomElement() {
+                return randomUnvisited
+            } else {
+                // Если почему-то все вершины посещены, возвращаем текущую вершину
+                return currentVertex
             }
         }
         
         // Случайный выбор вершины на основе вероятностей
-        let randomValue = Double.random(in: 0..<totalProbability)
+        let randomValue = Double.random(in: 0.0..<totalProbability)
         var cumulativeProbability = 0.0
         
         for (vertex, probability) in probabilities.enumerated() {
@@ -337,6 +351,8 @@ class GraphAlgorithms {
                 return vertex
             }
         }
+        
+        // Если по какой-то причине не удалось выбрать вершину, возвращаем текущую
         return currentVertex
     }
     

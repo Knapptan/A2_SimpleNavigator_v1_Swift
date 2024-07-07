@@ -13,6 +13,7 @@
 		491CA8A52C0338D200FA1743 /* s21_stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491CA8A42C0338D200FA1743 /* s21_stack.swift */; };
 		491CA8A72C0338DD00FA1743 /* s21_queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491CA8A62C0338DD00FA1743 /* s21_queue.swift */; };
 		491CA8A92C03393800FA1743 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491CA8A82C03393800FA1743 /* models.swift */; };
+		92DE78322C3B0D3600B29418 /* s21_graphValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DE78312C3B0D3600B29418 /* s21_graphValidator.swift */; };
 		92FF61F92C20580700C22E92 /* s21_priorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF61F82C20580700C22E92 /* s21_priorityQueue.swift */; };
 		92FF62032C206AC700C22E92 /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF62022C206AC700C22E92 /* GraphTests.swift */; };
 		92FF62082C206B9100C22E92 /* GraphAlgorithmsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF62072C206B9100C22E92 /* GraphAlgorithmsTests.swift */; };
@@ -38,6 +39,7 @@
 		491CA8A42C0338D200FA1743 /* s21_stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_stack.swift; sourceTree = "<group>"; };
 		491CA8A62C0338DD00FA1743 /* s21_queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_queue.swift; sourceTree = "<group>"; };
 		491CA8A82C03393800FA1743 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
+		92DE78312C3B0D3600B29418 /* s21_graphValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_graphValidator.swift; sourceTree = "<group>"; };
 		92FF61F82C20580700C22E92 /* s21_priorityQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_priorityQueue.swift; sourceTree = "<group>"; };
 		92FF62002C206AC700C22E92 /* GraphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92FF62022C206AC700C22E92 /* GraphTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTests.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				491CA8992C03328800FA1743 /* main.swift */,
 				491CA8A02C03339600FA1743 /* s21_graph.swift */,
+				92DE78312C3B0D3600B29418 /* s21_graphValidator.swift */,
 				491CA8A22C0333AA00FA1743 /* s21_graph_algorithms.swift */,
 				92FF61F82C20580700C22E92 /* s21_priorityQueue.swift */,
 				491CA8A42C0338D200FA1743 /* s21_stack.swift */,
@@ -197,6 +200,7 @@
 				491CA8A92C03393800FA1743 /* models.swift in Sources */,
 				491CA8A52C0338D200FA1743 /* s21_stack.swift in Sources */,
 				491CA8A32C0333AA00FA1743 /* s21_graph_algorithms.swift in Sources */,
+				92DE78322C3B0D3600B29418 /* s21_graphValidator.swift in Sources */,
 				491CA8A12C03339600FA1743 /* s21_graph.swift in Sources */,
 				491CA8A72C0338DD00FA1743 /* s21_queue.swift in Sources */,
 			);

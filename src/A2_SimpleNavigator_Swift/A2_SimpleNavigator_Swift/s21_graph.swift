@@ -10,18 +10,21 @@ import Foundation
 class Graph {
     private var adjacencyMatrix: [[Int]]
     private var verticesCount: Int
-    // флаги типа графа
-    private var isDirected: Bool = false
-    private var isWeighted: Bool = false
+    private var isDirected: Bool
+    private var isWeighted: Bool
     
     init() {
         self.adjacencyMatrix = []
         self.verticesCount = 0
+        self.isDirected = false
+        self.isWeighted = false
     }
     
     init(verticesCount: Int) {
         self.verticesCount = verticesCount
         self.adjacencyMatrix = Array(repeating: Array(repeating: 0, count: verticesCount), count: verticesCount)
+        self.isDirected = false
+        self.isWeighted = false
     }
     
     func loadGraphFromFile(_ filename: String) {
@@ -47,19 +50,35 @@ class Graph {
                     adjacencyMatrix[i][j] = weight
                 }
             }
-            determineGraphProperties() // проверка типа графа
         } catch {
             print("Error reading file: \(error)")
         }
     }
+       
     
     func getAdjacencyMatrix() -> [[Int]] {
-        return adjacencyMatrix
-    }
-    
-    func getVerticesCount() -> Int {
-        return verticesCount
-    }
+          return adjacencyMatrix
+      }
+      
+      func getVerticesCount() -> Int {
+          return verticesCount
+      }
+      
+      func setDirected(_ directed: Bool) {
+          self.isDirected = directed
+      }
+      
+      func setWeighted(_ weighted: Bool) {
+          self.isWeighted = weighted
+      }
+      
+      func isGraphDirected() -> Bool {
+          return isDirected
+      }
+      
+      func isGraphWeighted() -> Bool {
+          return isWeighted
+      }
     
     // определение является ли граф взвешенным направленным
     private func determineGraphProperties() {
