@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum MenuOption: Int, CaseIterable {
     case breadthFirstSearch = 1
     case depthFirstSearch = 2
@@ -123,7 +124,7 @@ class ConsoleApp {
             print(option.description)
             if graph_validator.validateGraph(graph) {
                 let solutionTSP = graph_algos.solveTravelingSalesmanProblem(graph: graph)
-                print(solutionTSP)
+                print(solutionTSP ?? "Nil")
             } else {
                 print("Failed to solve TSP due to graph validation error.")
             }

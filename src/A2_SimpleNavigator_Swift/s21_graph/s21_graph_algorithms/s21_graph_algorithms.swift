@@ -1,14 +1,14 @@
 //
 //  s21_graph_algorithms.swift
-//  A2_SimpleNavigator_Swift
+//  s21_graph_algorithms
 //
+//  Created by Knapptan on 15.07.2024.
 //  Created by Anton Krivonozhenkov on 26.05.2024.
 //
 
 import Foundation
 
-
-class GraphAlgorithms {
+public class GraphAlgorithms {
     // MARK: - PART 1
     
     // Поиск в глубину
@@ -253,7 +253,7 @@ class GraphAlgorithms {
         
         // В каждой итерации создается множество муравьев, каждый из которых строит свой путь, посещая все вершины
         for _ in 0..<maxIterations {
-        
+            
             var allPaths: [[Int]] = [] // Массив для хранения всех путей, найденных муравьями
             var allDistances: [Double] = [] // Массив для хранения расстояний для всех путей
             
@@ -277,8 +277,8 @@ class GraphAlgorithms {
                 
                 path.append((path[0])) // / Возвращение к начальной вершине
                 let distance = calculatePathDistance(path: path, graph: graph) // Вычисление длины пути
-                 allPaths.append(path) // Сохранение пути
-                 allDistances.append(distance) // Сохранение длины пути
+                allPaths.append(path) // Сохранение пути
+                allDistances.append(distance) // Сохранение длины пути
                 
                 // Обновление лучшего пути и его длины
                 if distance < bestDistance {
@@ -329,8 +329,8 @@ class GraphAlgorithms {
             }
         }
         
-        // Проверка, что totalProbability не равен нулю
-        if totalProbability == 0.0 {
+        // Проверка, что totalProbability не равен нулю или бесконечности
+        if totalProbability == 0.0 || probabilities.contains(Double.infinity) {
             // Если нет допустимых вероятностей, возвращаем случайную непосещенную вершину
             let unvisitedVertices = (0..<verticesCount).filter { !visited.contains($0) }
             if let randomUnvisited = unvisitedVertices.randomElement() {
@@ -368,4 +368,111 @@ class GraphAlgorithms {
         return distance
     }
 
+}
+
+struct Stack<Element> {
+    private var elements: [Element] = []
+    
+    // Создание пустого стека
+    init() {}
+    
+    // Проверка, пуст ли стек
+    func isEmpty() -> Bool {
+        return elements.isEmpty
+    }
+    
+    // Добавление элемента на вершину стека
+    mutating func push(_ value: Element){
+        elements.append(value)
+    }
+    
+    // Удаление элемента с вершины стека
+    @discardableResult
+    mutating func pop() -> Element? {
+        return elements.popLast()
+    }
+    
+    // Получение с вершины стека без его удаления
+    func top() -> Element? {
+        return elements.last
+    }
+    
+    // Получение количества элементов в стеке
+    func count() -> Int {
+        return elements.count
+    }
+    
+}
+
+
+struct Queue<Element> {
+    private var elements: [Element] = []
+    
+    // Создание пустой очереди
+    init() {}
+    
+    // Проверка, пуста ли очередь
+    func isEmpty() -> Bool {
+        return elements.isEmpty
+    }
+    
+    // Добавление элемента в конец очереди
+    mutating func push(_ value: Element){
+        elements.append(value)
+    }
+    
+    // Удаление элемента из начала очереди
+    @discardableResult
+    mutating func pop() -> Element? {
+        return elements.removeFirst()
+    }
+    
+    // Получение первого элемента из очереди без его удаления из очереди
+    func front() -> Element? {
+        return elements.first
+    }
+    
+    // Получение последнего элемента из очереди без его удаления из очереди
+    func back() -> Element? {
+        return elements.last
+    }
+    
+    // Получение количества элементов в очереди
+    func count() -> Int {
+        return elements.count
+    }
+    
+}
+
+// Приоритетная очередь, сортируется по дистанции
+struct PriorityQueue<Element: Equatable & Hashable> {
+    private var elements: [(element: Element, priority: Int)] = []
+    
+    func isEmpty() -> Bool {
+        return elements.isEmpty
+    }
+    
+    mutating func enqueue(_ element: Element, priority: Int) {
+        elements.append((element, priority))
+        elements.sort { $0.priority < $1.priority }
+    }
+    
+    mutating func dequeue() -> Element? {
+        return isEmpty() ? nil : elements.removeFirst().element
+    }
+}
+
+// Описание типа кортежа в массиве протоколы Equatable и Hashable
+struct VertexDistance: Equatable, Hashable {
+    let vertex: Int
+    let distance: Int
+}
+
+func ==(lhs: VertexDistance, rhs: VertexDistance) -> Bool {
+    return lhs.vertex == rhs.vertex && lhs.distance == rhs.distance
+}
+
+struct TsmResult {
+    var vertices: [Int] // массив с искомым маршрутом (с порядком обхода вершин).
+    var distance: Double // длина этого маршрута
 }
