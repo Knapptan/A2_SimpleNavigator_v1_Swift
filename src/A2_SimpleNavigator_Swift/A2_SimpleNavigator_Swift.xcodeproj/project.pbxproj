@@ -12,8 +12,7 @@
 		921006942C45527600908EFE /* s21_graph_algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921006932C45527600908EFE /* s21_graph_algorithms.swift */; };
 		921006952C456C5400908EFE /* s21_graph_algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921006932C45527600908EFE /* s21_graph_algorithms.swift */; };
 		921006962C456C5400908EFE /* s21_graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921006912C45525400908EFE /* s21_graph.swift */; };
-		92FF62032C206AC700C22E92 /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF62022C206AC700C22E92 /* GraphTests.swift */; };
-		92FF62082C206B9100C22E92 /* GraphAlgorithmsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF62072C206B9100C22E92 /* GraphAlgorithmsTests.swift */; };
+		92FF62032C206AC700C22E92 /* GraphAlgorithmsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF62022C206AC700C22E92 /* GraphAlgorithmsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,8 +33,7 @@
 		921006912C45525400908EFE /* s21_graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = s21_graph.swift; path = s21_graph/s21_graph/s21_graph.swift; sourceTree = "<group>"; };
 		921006932C45527600908EFE /* s21_graph_algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = s21_graph_algorithms.swift; path = s21_graph/s21_graph_algorithms/s21_graph_algorithms.swift; sourceTree = "<group>"; };
 		92FF62002C206AC700C22E92 /* GraphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		92FF62022C206AC700C22E92 /* GraphTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTests.swift; sourceTree = "<group>"; };
-		92FF62072C206B9100C22E92 /* GraphAlgorithmsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAlgorithmsTests.swift; sourceTree = "<group>"; };
+		92FF62022C206AC700C22E92 /* GraphAlgorithmsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAlgorithmsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +85,7 @@
 		92FF62012C206AC700C22E92 /* GraphTests */ = {
 			isa = PBXGroup;
 			children = (
-				92FF62022C206AC700C22E92 /* GraphTests.swift */,
-				92FF62072C206B9100C22E92 /* GraphAlgorithmsTests.swift */,
+				92FF62022C206AC700C22E92 /* GraphAlgorithmsTests.swift */,
 			);
 			path = GraphTests;
 			sourceTree = "<group>";
@@ -194,8 +191,7 @@
 			files = (
 				921006952C456C5400908EFE /* s21_graph_algorithms.swift in Sources */,
 				921006962C456C5400908EFE /* s21_graph.swift in Sources */,
-				92FF62032C206AC700C22E92 /* GraphTests.swift in Sources */,
-				92FF62082C206B9100C22E92 /* GraphAlgorithmsTests.swift in Sources */,
+				92FF62032C206AC700C22E92 /* GraphAlgorithmsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

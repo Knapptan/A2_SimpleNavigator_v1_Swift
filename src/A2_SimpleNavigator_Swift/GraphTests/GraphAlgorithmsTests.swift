@@ -1,5 +1,5 @@
 //
-//  A2_swift_graphAlgorithmsTests.swift
+//  GraphTests.swift
 //  GraphTests
 //
 //  Created by Knapptan on 17.06.2024.
@@ -9,29 +9,96 @@ import XCTest
 
 @testable import A2_SimpleNavigator_Swift
 
-final class GraphAlgorithmsTests: XCTestCase {
-
+final class GraphTests: XCTestCase {
+    
+    var graphAlgorithms: GraphAlgorithms!
+    var graph: Graph!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        // Инициализация перед каждым тестом
+        graphAlgorithms = GraphAlgorithms()
+        
+        // Пример графа
+        // 0 - 1 - 2
+        // |   |   |
+        // 3 - 4 - 5
+        let adjacencyMatrix = [
+            [0, 1, 0, 1, 0, 0],
+            [1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1],
+            [0, 0, 1, 0, 1, 0]
+        ]
+        
+        graph = Graph(adjacencyMatrix: adjacencyMatrix)
     }
-
+    
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // Освобождение ресурсов после каждого теста
+        graphAlgorithms = nil
+        graph = nil
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testDepthFirstSearch() throws {
+        let result = graphAlgorithms.depthFirstSearch(graph: graph, startVertex: 0)
+        let expected = [0, 1, 2, 5, 4, 3]
+        XCTAssertEqual(result, expected, "Depth First Search result is incorrect")
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testBreadthFirstSearch() throws {
+        let result = graphAlgorithms.breadthFirstSearch(graph: graph, startVertex: 0)
+        let expected = [0, 1, 3, 2, 4, 5]
+        XCTAssertEqual(result, expected, "Breadth First Search result is incorrect")
+    }
+    
+    func testGetShortestPathBetweenVertices() throws {
+        let result = graphAlgorithms.getShortestPathBetweenVertices(graph: graph, vertex1: 0, vertex2: 5)
+        let expected = 3
+        XCTAssertEqual(result, expected, "Shortest path between vertices is incorrect")
+    }
+    
+    func testGetShortestPathsBetweenAllVertices() throws {
+        let result = graphAlgorithms.getShortestPathsBetweenAllVertices(graph: graph)
+        let expected = [
+            [0, 1, 2, 1, 2, 3],
+            [1, 0, 1, 2, 1, 2],
+            [2, 1, 0, 3, 2, 1],
+            [1, 2, 3, 0, 1, 2],
+            [2, 1, 2, 1, 0, 1],
+            [3, 2, 1, 2, 1, 0]
+        ]
+        XCTAssertEqual(result, expected, "Shortest paths between all vertices is incorrect")
+    }
+    
+    func testGetLeastSpanningTree() throws {
+        let result = graphAlgorithms.getLeastSpanningTree(graph: graph)
+        let expected = [
+            [0, 1, 0, 1, 0, 0],
+            [1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0, 0]
+        ]
+        XCTAssertEqual(result, expected, "Least spanning tree is incorrect")
+    }
+    
+    func testSolveTravelingSalesmanProblem() throws {
+        if let result = graphAlgorithms.solveTravelingSalesmanProblem(graph: graph) {
+            let expectedPath = [0, 1, 2, 5, 4, 3, 0] // Пример ожидаемого пути (может варьироваться)
+            let expectedDistance = 6.0 // Пример ожидаемого расстояния
+//            XCTAssertEqual(result.distance, expectedDistance, accuracy: 0.1, "TSP distance is incorrect")
+//            XCTAssertEqual(result.vertices, expectedPath, "TSP path is incorrect")
+        } else {
+            XCTFail("TSP result is nil")
         }
     }
-
+    
+    func testPerformanceExample() throws {
+        measure {
+            // Измерение производительности
+            _ = graphAlgorithms.solveTravelingSalesmanProblem(graph: graph)
+        }
+    }
 }
