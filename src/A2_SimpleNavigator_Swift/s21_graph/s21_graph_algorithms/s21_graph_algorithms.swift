@@ -91,29 +91,29 @@ public class GraphAlgorithms {
         let verticesCount = graph.getVerticesCount()
         
         // проверка что вершины в пределах графа
-        guard vertex1 >= 0, vertex1 < verticesCount, vertex2 >= 0,vertex2 < verticesCount else {
+        guard vertex1 >= 0, vertex1 < verticesCount, vertex2 >= 0, vertex2 < verticesCount else {
             print("Error: One or both vertices are out of bounds.")
             return nil
         }
         
-        // Создаем массив расстояний до вершин и заполняем услоной бесконечностью - инт макс
+        // Создаем массив расстояний до вершин и заполняем условной бесконечностью - Int.max
         var distances = [Int](repeating: Int.max, count: verticesCount)
-        // Обновляем расстояние до начальной вершины оно равно 0
+        // Обновляем расстояние до начальной вершины, оно равно 0
         distances[vertex1] = 0
         
-        // Создаем массив родителей и заполняем нилл (не обязательная часть алгоритма)
+        // Создаем массив родителей и заполняем nil (не обязательная часть алгоритма)
         var parents = [Int?](repeating: nil, count: verticesCount)
         
-        // Создаем очередь приоритетов которая сотрирует вершины по дистанции до вершины
+        // Создаем очередь приоритетов, которая сортирует вершины по дистанции до вершины
         var priorityQueue = PriorityQueue<VertexDistance>()
-        // Добавляем первую вершину с 0 дистаницей
+        // Добавляем первую вершину с 0 дистанцией
         priorityQueue.enqueue(VertexDistance(vertex: vertex1, distance: 0), priority: 0)
         
         // Цикл пока приоритетная очередь не опустеет
         while !priorityQueue.isEmpty() {
-            // Извлекаем элемент из очереди приоритетов это кортеж с вершиной ирасстоянием до нее
+            // Извлекаем элемент из очереди приоритетов, это кортеж с вершиной и расстоянием до неё
             guard let currentVertexDistance = priorityQueue.dequeue() else { break }
-            // Извлекакем вершину
+            // Извлекаем вершину
             let currentVertex = currentVertexDistance.vertex
             // Извлекаем расстояние
             let currentDistance = currentVertexDistance.distance
@@ -123,25 +123,28 @@ public class GraphAlgorithms {
                 continue
             }
             
-            // перебор соседей вершины
+            // Перебор соседей вершины
             for neighbor in 0..<verticesCount {
-                //  проходимся по массиву соседей и получаем вес ребра между текущей вершиной и её соседом
+                // Проходимся по массиву соседей и получаем вес ребра между текущей вершиной и её соседом
                 let weight = graph.getAdjacencyMatrix()[currentVertex][neighbor]
                 if weight != 0 {
                     let newDistance = currentDistance + weight
                     // Если новое рассчитанное расстояние меньше текущего известного минимального расстояния до соседа, то обновляем минимальное расстояние до соседа.
                     if newDistance < distances[neighbor] {
                         distances[neighbor] = newDistance
-                        //Обновляем родительскую вершину для соседа, чтобы позже можно было восстановить кратчайший путь.
+                        // Обновляем родительскую вершину для соседа, чтобы позже можно было восстановить кратчайший путь.
                         parents[neighbor] = currentVertex
-                        //Добавляем соседа в очередь приоритетов с обновленным расстоянием. Это гарантирует, что сосед будет обработан позже с учетом нового минимального расстояния.
+                        // Добавляем соседа в очередь приоритетов с обновленным расстоянием. Это гарантирует, что сосед будет обработан позже с учетом нового минимального расстояния.
                         priorityQueue.enqueue(VertexDistance(vertex: neighbor, distance: newDistance), priority: newDistance)
                     }
                 }
             }
         }
-        return distances[vertex2]
+        
+        // Если расстояние до целевой вершины все еще равно Int.max, значит путь не найден
+        return distances[vertex2] == Int.max ? nil : distances[vertex2]
     }
+
     
     func getShortestPathsBetweenAllVertices(graph: Graph) -> [[Int]] {
         let verticesCount = graph.getVerticesCount()
@@ -235,72 +238,65 @@ public class GraphAlgorithms {
     
     func solveTravelingSalesmanProblem(graph: Graph) -> TsmResult? {
         let verticesCount = graph.getVerticesCount()
-        let alpha = 1.0 // Влияние феромона
-        let beta = 5.0 // Влияние эвристической функции (обратное расстояние)
-        let evaporationRate = 0.5 // Коэффициент испарения феромона
-        let initialPheromone = 1.0 // Начальное значение ферамонов
-        let numAnts = verticesCount // Количество муравьев в каждой итерации
-        var maxIterations = 100 // Если слишком малое число вершин, то 100 итераций
-        if verticesCount > 10{
-            maxIterations = verticesCount * 10 // Максимальное количество итераций
-        }
+        let initialVertex = 0 // Начинаем с первой вершины
+        var bestPath: [Int] = []
+        var bestDistance: Double = Double.infinity
         
-        // Инициализация матрицы феромонов
-        var pheromones = Array(repeating: Array(repeating: initialPheromone, count: verticesCount), count: verticesCount)
+        // Инициализация феромонов
+        var pheromones: [[Double]] = Array(repeating: Array(repeating: 1.0, count: verticesCount), count: verticesCount)
+        let evaporationRate = 0.5 // Коэффициент испарения феромонов
+        let alpha = 1.0 // Влияние феромонов
+        let beta = 1.0 // Влияние эвристической информации
         
-        var bestPath: [Int] = [] // Переменная для хранения лучшего пути
-        var bestDistance = Double.infinity // Переменная для хранения длины лучшего пути
+        // Количество итераций и муравьев
+        let numberOfIterations = 100
+        let numberOfAnts = verticesCount
         
-        // В каждой итерации создается множество муравьев, каждый из которых строит свой путь, посещая все вершины
-        for _ in 0..<maxIterations {
+        for _ in 0..<numberOfIterations {
+            var allPaths: [[Int]] = []
+            var allDistances: [Double] = []
             
-            var allPaths: [[Int]] = [] // Массив для хранения всех путей, найденных муравьями
-            var allDistances: [Double] = [] // Массив для хранения расстояний для всех путей
-            
-            // Цикл для создания и движения каждого муравья
-            for _ in 0..<numAnts {
-                var visited = Set<Int>() // Множество для хранения посещенных вершин
-                var path: [Int] = [] // Массив для хранения пути муравья
-                var currentVertex = Int.random(in: 0..<verticesCount) // Случайный выбор начальной вершины
-                path.append(currentVertex) // Добавление начальной вершины в путь
-                visited.insert(currentVertex) // Отправление начальной вершины в посещенные
+            for _ in 0..<numberOfAnts {
+                var currentVertex = initialVertex
+                var visited: Set<Int> = [currentVertex]
+                var path: [Int] = [currentVertex]
                 
-                // Цикл, пока все вершины не будут посещены
+                // Построение пути муравьем
                 while visited.count < verticesCount {
-                    // Выбор следующей вершины на основе вероятностей
                     let nextVertex = selectNextVertex(from: currentVertex, graph: graph, pheromones: pheromones, visited: visited, alpha: alpha, beta: beta)
-                    // Записть каждой посещенной вернины
                     path.append(nextVertex)
                     visited.insert(nextVertex)
-                    currentVertex = nextVertex // Рассмотрение следующей вершины
+                    currentVertex = nextVertex
                 }
                 
-                path.append((path[0])) // / Возвращение к начальной вершине
-                let distance = calculatePathDistance(path: path, graph: graph) // Вычисление длины пути
-                allPaths.append(path) // Сохранение пути
-                allDistances.append(distance) // Сохранение длины пути
+                // Добавляем возврат к начальной вершине
+                path.append(initialVertex)
+                let pathDistance = calculatePathDistance(path: path, graph: graph)
+                allPaths.append(path)
+                allDistances.append(pathDistance)
                 
-                // Обновление лучшего пути и его длины
-                if distance < bestDistance {
+                // Обновление лучшего пути
+                if pathDistance < bestDistance {
+                    bestDistance = pathDistance
                     bestPath = path
-                    bestDistance = distance
                 }
             }
             
             // Испарение феромонов
             for i in 0..<verticesCount {
-                for j in 0..<verticesCount{
+                for j in 0..<verticesCount {
                     pheromones[i][j] *= (1.0 - evaporationRate)
                 }
             }
             
             // Обновление феромонов на основе пройденных путей
             for (path, distance) in zip(allPaths, allDistances) {
+                let pheromoneDeposit = 1.0 / distance
                 for i in 0..<(path.count - 1) {
                     let from = path[i]
                     let to = path[i + 1]
-                    pheromones[from][to] = 1.0 / distance
-                    pheromones[to][from] = 1.0 / distance
+                    pheromones[from][to] += pheromoneDeposit
+                    pheromones[to][from] += pheromoneDeposit
                 }
             }
         }
@@ -318,7 +314,7 @@ public class GraphAlgorithms {
         // Вычисление вероятностей выбора каждой вершины
         for vertex in 0..<verticesCount {
             // Вычисляем только для непосещенных вершин
-            if !visited.contains(vertex) {
+            if !visited.contains(vertex) && adjacencyMatrix[currentVertex][vertex] > 0 {
                 let pheromone = pheromones[currentVertex][vertex] // Извлечение значения феромона
                 let distance = Double(adjacencyMatrix[currentVertex][vertex]) // Извлечение расстояния
                 let probability = pow(pheromone, alpha) * pow(1.0 / distance, beta) // Вычисление вероятности выбора вершины
@@ -365,9 +361,11 @@ public class GraphAlgorithms {
             distance += Double(adjacencyMatrix[path[i]][path[i + 1]])
         }
         
+        // Добавляем расстояние от последней вершины обратно к первой, чтобы сделать путь циклическим
+        distance += Double(adjacencyMatrix[path.last!][path.first!])
+        
         return distance
     }
-
 }
 
 struct Stack<Element> {
