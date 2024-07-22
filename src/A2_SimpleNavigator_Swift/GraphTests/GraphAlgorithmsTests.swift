@@ -76,27 +76,27 @@ final class GraphTests: XCTestCase {
         XCTAssertEqual(result, expected, "Floyd-Warshall did not return the expected result")
     }
 
-    // тест на оставное древо - валится
-//    func testGetLeastSpanningTree() throws {
-//        let adjacencyMatrix = [
-//            [0, 2, 0, 6, 0],
-//            [2, 0, 3, 8, 5],
-//            [0, 3, 0, 0, 7],
-//            [6, 8, 0, 0, 9],
-//            [0, 5, 7, 9, 0]
-//        ]
-//        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
-//        let algorithms = GraphAlgorithms()
-//        let result = algorithms.getLeastSpanningTree(graph: graph)
-//        let expected = [
-//            [0, 2, 0, 6, 0],
-//            [2, 0, 3, 0, 5],
-//            [0, 3, 0, 0, 7],
-//            [6, 0, 0, 0, 0],
-//            [0, 5, 7, 0, 0]
-//        ]
-//        XCTAssertEqual(result, expected, "MST did not return the expected result")
-//    }
+//     Тест на оставное древо - валится
+    func testGetLeastSpanningTree() throws {
+        let adjacencyMatrix = [
+            [0, 2, 0, 6, 0],
+            [2, 0, 3, 8, 5],
+            [0, 3, 0, 0, 7],
+            [6, 8, 0, 0, 9],
+            [0, 5, 7, 9, 0]
+        ]
+        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
+        let algorithms = GraphAlgorithms()
+        let result = algorithms.getLeastSpanningTree(graph: graph)
+        let expected = [
+            [0, 2, 0, 6, 0],
+            [2, 0, 3, 0, 5],
+            [0, 3, 0, 0, 7],
+            [6, 0, 0, 0, 0],
+            [0, 5, 7, 0, 0]
+        ]
+        XCTAssertEqual(result, expected, "MST did not return the expected result")
+    }
 
     func testSolveTravelingSalesmanProblem() throws {
         let adjacencyMatrix = [
@@ -156,45 +156,44 @@ final class GraphTests: XCTestCase {
         XCTAssertNil(result, "Shortest path should be nil for disconnected vertices")
     }
 
-//    func testGetShortestPathsBetweenAllVertices_DisconnectedGraph() throws {
-//        let adjacencyMatrix = [
-//            [0, 1, 0, 0],
-//            [1, 0, 0, 0],
-//            [0, 0, 0, 1],
-//            [0, 0, 1, 0]
-//        ]
-//        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
-//        let algorithms = GraphAlgorithms()
-//        let result = algorithms.getShortestPathsBetweenAllVertices(graph: graph)
-//        let expected = [
-//            [0, 1, Double.infinity, Double.infinity],
-//            [1, 0, Double.infinity, Double.infinity],
-//            [Double.infinity, Double.infinity, 0, 1],
-//            [Double.infinity, Double.infinity, 1, 0]
-//        ]
-//        XCTAssertEqual(result, expected, "Floyd-Warshall did not return the expected result for a disconnected graph")
-//    }
+    func testGetShortestPathsBetweenAllVertices_DisconnectedGraph() throws {
+        let adjacencyMatrix = [
+            [0, 1, 0, 0],
+            [1, 0, 0, 0],
+            [0, 0, 0, 1],
+            [0, 0, 1, 0]
+        ]
+        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
+        let algorithms = GraphAlgorithms()
+        let result = algorithms.getShortestPathsBetweenAllVertices(graph: graph)
+        let expected = [
+            [0, 1, Int.max, Int.max],
+            [1, 0, Int.max, Int.max],
+            [Int.max, Int.max, 0, 1],
+            [Int.max, Int.max, 1, 0]
+        ]
+        XCTAssertEqual(result, expected, "Floyd-Warshall did not return the expected result for a disconnected graph")
+    }
 
-    // застревает
-    
-//    func testGetLeastSpanningTree_DisconnectedGraph() throws {
-//        let adjacencyMatrix = [
-//            [0, 1, 0, 0],
-//            [1, 0, 0, 0],
-//            [0, 0, 0, 1],
-//            [0, 0, 1, 0]
-//        ]
-//        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
-//        let algorithms = GraphAlgorithms()
-//        let result = algorithms.getLeastSpanningTree(graph: graph)
-//        let expected = [
-//            [0, 1, 0, 0],
-//            [1, 0, 0, 0],
-//            [0, 0, 0, 1],
-//            [0, 0, 1, 0]
-//        ]
-//        XCTAssertEqual(result, expected, "MST did not return the expected result for a disconnected graph")
-//    }
+    // Валится
+    func testGetLeastSpanningTree_DisconnectedGraph() throws {
+        let adjacencyMatrix = [
+            [0, 1, 0, 0],
+            [1, 0, 0, 0],
+            [0, 0, 0, 1],
+            [0, 0, 1, 0]
+        ]
+        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
+        let algorithms = GraphAlgorithms()
+        let result = algorithms.getLeastSpanningTree(graph: graph)
+        let expected = [
+            [0, 1, 0, 0],
+            [1, 0, 0, 0],
+            [0, 0, 0, 1],
+            [0, 0, 1, 0]
+        ]
+        XCTAssertEqual(result, expected, "MST did not return the expected result for a disconnected graph")
+    }
 
     func testSolveTravelingSalesmanProblem_DisconnectedGraph() throws {
         let adjacencyMatrix = [
@@ -252,19 +251,19 @@ final class GraphTests: XCTestCase {
         XCTAssertEqual(result, expected, "Floyd-Warshall did not return the expected result for a single node graph")
     }
 
-    // Тест на дерево который валится
-//    func testGetLeastSpanningTree_SingleNodeGraph() throws {
-//        let adjacencyMatrix = [
-//            [0]
-//        ]
-//        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
-//        let algorithms = GraphAlgorithms()
-//        let result = algorithms.getLeastSpanningTree(graph: graph)
-//        let expected = [
-//            [0]
-//        ]
-//        XCTAssertEqual(result, expected, "MST did not return the expected result for a single node graph")
-//    }
+//     Тест на дерево который валится
+    func testGetLeastSpanningTree_SingleNodeGraph() throws {
+        let adjacencyMatrix = [
+            [0]
+        ]
+        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
+        let algorithms = GraphAlgorithms()
+        let result = algorithms.getLeastSpanningTree(graph: graph)
+        let expected = [
+            [0]
+        ]
+        XCTAssertEqual(result, expected, "MST did not return the expected result for a single node graph")
+    }
 
     func testSolveTravelingSalesmanProblem_SingleNodeGraph() throws {
         let adjacencyMatrix = [

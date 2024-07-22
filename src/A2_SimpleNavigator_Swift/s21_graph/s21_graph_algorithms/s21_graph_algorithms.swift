@@ -181,25 +181,27 @@ public class GraphAlgorithms {
     }
     // MARK: - PART 3
     
-    func getLeastSpanningTree(graph: Graph, startVertex: Int = 3) -> [[Int]] {
+    func getLeastSpanningTree(graph: Graph) -> [[Int]] {
         let adjacencyMatrix = graph.getAdjacencyMatrix()
         let verticesCount = graph.getVerticesCount()
+
+        var key = Array(repeating: Int.max, count: verticesCount) // ключи, используемые для выбора минимального веса ребра
+        var parent = Array(repeating: -1, count: verticesCount) // массив для хранения MST
+        var SpanningTreeArray = Array(repeating: false, count: verticesCount) // чтобы отслеживать вершины включенные в MST
         
-        guard startVertex >= 0 && startVertex < verticesCount else {
-            print("Error: Starting vertex out of range.")
-            return []
-        }
-        
-        var key = Array(repeating: Int.max, count: verticesCount)
-        var parent = Array(repeating: -1, count: verticesCount)
-        var SpanningTreeArray = Array(repeating: false, count: verticesCount)
-        
-        key[startVertex] = 0
-        parent[startVertex] = -1
+        key[0] = 0 // выбираем первую вершину в качестве стартовой
+        parent[0] = -1 // первая вершина является корнем MST
         
         for _ in 0..<verticesCount-1 {
+            // выбираем вершину u, не включенную в MST, с минимальным значением ключа
             let j = minKey(keys: key, mstSet: SpanningTreeArray)
-            SpanningTreeArray[j] = true
+            
+            // Если minKey вернул -1, это означает, что нет доступных вершин для выбора
+            if j == -1 {
+                break
+            }
+            
+            SpanningTreeArray[j] = true // добавляем вершину в MST
             
             for i in 0..<verticesCount {
                 if adjacencyMatrix[j][i] != 0 && !SpanningTreeArray[i] && adjacencyMatrix[j][i] < key[i] {
@@ -209,6 +211,7 @@ public class GraphAlgorithms {
             }
         }
         
+        // создаем матрицу смежности для MST
         var LeastSpanningTreeAdjacencyMatrix = Array(repeating: Array(repeating: 0, count: verticesCount), count: verticesCount)
         
         for i in 0..<verticesCount {
@@ -226,7 +229,7 @@ public class GraphAlgorithms {
         var minIndex = -1
         
         for i in 0..<keys.count {
-            if mstSet[i] == false && keys[i] < min {
+            if !mstSet[i] && keys[i] < min {
                 min = keys[i]
                 minIndex = i
             }
