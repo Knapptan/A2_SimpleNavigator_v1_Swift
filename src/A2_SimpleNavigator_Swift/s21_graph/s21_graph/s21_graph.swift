@@ -1,11 +1,3 @@
-//
-//  s21_graph.swift
-//  s21_graph
-//
-//  Created by Knapptan on 15.07.2024.
-//  Created by Anton Krivonozhenkov on 26.05.2024.
-//
-
 import Foundation
 
 public class Graph {
@@ -14,28 +6,28 @@ public class Graph {
     private var isDirected: Bool
     private var isWeighted: Bool
     
-    init() {
+    public init() {
         self.adjacencyMatrix = []
         self.verticesCount = 0
         self.isDirected = false
         self.isWeighted = false
     }
     
-    init(verticesCount: Int) {
+    public init(verticesCount: Int) {
         self.verticesCount = verticesCount
         self.adjacencyMatrix = Array(repeating: Array(repeating: 0, count: verticesCount), count: verticesCount)
         self.isDirected = false
         self.isWeighted = false
     }
     // для тестов
-    init(adjacencyMatrix: [[Int]]) {
+    public init(adjacencyMatrix: [[Int]]) {
         self.verticesCount = adjacencyMatrix.count
         self.adjacencyMatrix = adjacencyMatrix
         self.isDirected = false
         self.isWeighted = false
     }
     
-    func loadGraphFromFile(_ filename: String) {
+    public func loadGraphFromFile(_ filename: String) {
         do {
             let fileContents = try String(contentsOfFile: filename)
             let lines = fileContents.split(separator: "\n")
@@ -62,31 +54,31 @@ public class Graph {
             print("Error reading file: \(error)")
         }
     }
-       
     
-    func getAdjacencyMatrix() -> [[Int]] {
-          return adjacencyMatrix
-      }
-      
-      func getVerticesCount() -> Int {
-          return verticesCount
-      }
-      
-      func setDirected(_ directed: Bool) {
-          self.isDirected = directed
-      }
-      
-      func setWeighted(_ weighted: Bool) {
-          self.isWeighted = weighted
-      }
-      
-      func isGraphDirected() -> Bool {
-          return isDirected
-      }
-      
-      func isGraphWeighted() -> Bool {
-          return isWeighted
-      }
+    
+    public func getAdjacencyMatrix() -> [[Int]] {
+        return adjacencyMatrix
+    }
+    
+    public func getVerticesCount() -> Int {
+        return verticesCount
+    }
+    
+    func setDirected(_ directed: Bool) {
+        self.isDirected = directed
+    }
+    
+    func setWeighted(_ weighted: Bool) {
+        self.isWeighted = weighted
+    }
+    
+    func isGraphDirected() -> Bool {
+        return isDirected
+    }
+    
+    func isGraphWeighted() -> Bool {
+        return isWeighted
+    }
     
     // определение является ли граф взвешенным направленным
     private func determineGraphProperties() {
@@ -106,7 +98,7 @@ public class Graph {
     }
     
     // переваод в дот формат
-    func exportGraphToDot(_ filename: String) {
+    public func exportGraphToDot(_ filename: String) {
         var dotString: String
         
         // если направленный то заголовок с приставкой ди
@@ -141,11 +133,15 @@ public class Graph {
 }
 
 
- class GraphValidator {
-    func validateGraph(_ graph: Graph) -> Bool {
+public class GraphValidator {
+    public init() {
+        
+    }
+    
+    public func validateGraph(_ graph: Graph) -> Bool {
         let adjacencyMatrix = graph.getAdjacencyMatrix()
         let verticesCount = graph.getVerticesCount()
-//        let isDirected = graph.isGraphDirected()
+        //        let isDirected = graph.isGraphDirected()
         let isWeighted = graph.isGraphWeighted()
         
         // Проверка, что матрица смежности квадратная

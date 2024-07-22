@@ -1,18 +1,16 @@
-//
-//  s21_graph_algorithms.swift
-//  s21_graph_algorithms
-//
-//  Created by Knapptan on 15.07.2024.
-//  Created by Anton Krivonozhenkov on 26.05.2024.
-//
-
 import Foundation
+import s21_graph
 
 public class GraphAlgorithms {
+    
+    public init() {
+        
+    }
+    
     // MARK: - PART 1
     
     // Поиск в глубину
-    func depthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
+    public func depthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
         guard startVertex >= 0 && startVertex < graph.getVerticesCount() else {
             print("Error: Start vertex \(startVertex) is out of bounds.")
             return []
@@ -45,7 +43,7 @@ public class GraphAlgorithms {
     }
     
     // Поиск в ширину
-    func breadthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
+    public func breadthFirstSearch(graph: Graph, startVertex: Int) -> [Int] {
         guard startVertex >= 0 && startVertex < graph.getVerticesCount() else {
             print("Error: Start vertex \(startVertex) is out of bounds.")
             return []
@@ -87,7 +85,7 @@ public class GraphAlgorithms {
     }
     
     // MARK: - PART 2
-    func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int? {
+    public func getShortestPathBetweenVertices(graph: Graph, vertex1: Int, vertex2: Int) -> Int? {
         let verticesCount = graph.getVerticesCount()
         
         // проверка что вершины в пределах графа
@@ -146,7 +144,7 @@ public class GraphAlgorithms {
     }
 
     
-    func getShortestPathsBetweenAllVertices(graph: Graph) -> [[Int]] {
+    public func getShortestPathsBetweenAllVertices(graph: Graph) -> [[Int]] {
         let verticesCount = graph.getVerticesCount()
         let adjacencyMatrix = graph.getAdjacencyMatrix()
         let inf = Int.max
@@ -181,7 +179,7 @@ public class GraphAlgorithms {
     }
     // MARK: - PART 3
     
-    func getLeastSpanningTree(graph: Graph) -> [[Int]] {
+    public func getLeastSpanningTree(graph: Graph) -> [[Int]] {
         let adjacencyMatrix = graph.getAdjacencyMatrix()
         let verticesCount = graph.getVerticesCount()
 
@@ -239,7 +237,7 @@ public class GraphAlgorithms {
     
     // MARK: - PART 4
     
-    func solveTravelingSalesmanProblem(graph: Graph) -> TsmResult? {
+    public func solveTravelingSalesmanProblem(graph: Graph) -> TsmResult? {
         let verticesCount = graph.getVerticesCount()
         let initialVertex = 0 // Начинаем с первой вершины
         var bestPath: [Int] = []
@@ -497,7 +495,7 @@ func ==(lhs: VertexDistance, rhs: VertexDistance) -> Bool {
     return lhs.vertex == rhs.vertex && lhs.distance == rhs.distance
 }
 
-struct TsmResult {
+public struct TsmResult {
     var vertices: [Int] // массив с искомым маршрутом (с порядком обхода вершин).
     var distance: Double // длина этого маршрута
 }

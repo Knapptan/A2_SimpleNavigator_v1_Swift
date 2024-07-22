@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		491CA89A2C03328800FA1743 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491CA8992C03328800FA1743 /* main.swift */; };
-		921006922C45525400908EFE /* s21_graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921006912C45525400908EFE /* s21_graph.swift */; };
-		921006942C45527600908EFE /* s21_graph_algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921006932C45527600908EFE /* s21_graph_algorithms.swift */; };
-		921006952C456C5400908EFE /* s21_graph_algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921006932C45527600908EFE /* s21_graph_algorithms.swift */; };
-		921006962C456C5400908EFE /* s21_graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921006912C45525400908EFE /* s21_graph.swift */; };
+		495A461B2C4E940D0028903A /* libs21_graph_algorithms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 495A461A2C4E940D0028903A /* libs21_graph_algorithms.a */; };
+		495A461F2C4E95670028903A /* libs21_graph.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 495A461E2C4E95670028903A /* libs21_graph.a */; };
 		92FF62032C206AC700C22E92 /* GraphAlgorithmsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF62022C206AC700C22E92 /* GraphAlgorithmsTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,8 +28,8 @@
 /* Begin PBXFileReference section */
 		491CA8962C03328800FA1743 /* A2_SimpleNavigator_Swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = A2_SimpleNavigator_Swift; sourceTree = BUILT_PRODUCTS_DIR; };
 		491CA8992C03328800FA1743 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		921006912C45525400908EFE /* s21_graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = s21_graph.swift; path = s21_graph/s21_graph/s21_graph.swift; sourceTree = "<group>"; };
-		921006932C45527600908EFE /* s21_graph_algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = s21_graph_algorithms.swift; path = s21_graph/s21_graph_algorithms/s21_graph_algorithms.swift; sourceTree = "<group>"; };
+		495A461A2C4E940D0028903A /* libs21_graph_algorithms.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libs21_graph_algorithms.a; sourceTree = "<group>"; };
+		495A461E2C4E95670028903A /* libs21_graph.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libs21_graph.a; sourceTree = "<group>"; };
 		92FF62002C206AC700C22E92 /* GraphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92FF62022C206AC700C22E92 /* GraphAlgorithmsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAlgorithmsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				495A461F2C4E95670028903A /* libs21_graph.a in Frameworks */,
+				495A461B2C4E940D0028903A /* libs21_graph_algorithms.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,11 +57,10 @@
 		491CA88D2C03328800FA1743 = {
 			isa = PBXGroup;
 			children = (
-				921006932C45527600908EFE /* s21_graph_algorithms.swift */,
-				921006912C45525400908EFE /* s21_graph.swift */,
 				491CA8982C03328800FA1743 /* A2_SimpleNavigator_Swift */,
 				92FF62012C206AC700C22E92 /* GraphTests */,
 				491CA8972C03328800FA1743 /* Products */,
+				495A46192C4E940D0028903A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,6 +79,15 @@
 				491CA8992C03328800FA1743 /* main.swift */,
 			);
 			path = A2_SimpleNavigator_Swift;
+			sourceTree = "<group>";
+		};
+		495A46192C4E940D0028903A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				495A461E2C4E95670028903A /* libs21_graph.a */,
+				495A461A2C4E940D0028903A /* libs21_graph_algorithms.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		92FF62012C206AC700C22E92 /* GraphTests */ = {
@@ -179,8 +187,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				921006942C45527600908EFE /* s21_graph_algorithms.swift in Sources */,
-				921006922C45525400908EFE /* s21_graph.swift in Sources */,
 				491CA89A2C03328800FA1743 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,8 +195,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				921006952C456C5400908EFE /* s21_graph_algorithms.swift in Sources */,
-				921006962C456C5400908EFE /* s21_graph.swift in Sources */,
 				92FF62032C206AC700C22E92 /* GraphAlgorithmsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,7 +324,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				ON_DEMAND_RESOURCES_INITIAL_INSTALL_TAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(PROJECT_DIR)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -329,7 +339,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				ON_DEMAND_RESOURCES_INITIAL_INSTALL_TAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(PROJECT_DIR)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

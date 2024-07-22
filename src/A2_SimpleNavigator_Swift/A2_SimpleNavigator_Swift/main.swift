@@ -1,12 +1,6 @@
-//
-//  main.swift
-//  A2_SimpleNavigator_Swift
-//
-//  Created by Anton Krivonozhenkov on 26.05.2024.
-//
-
 import Foundation
-
+import s21_graph
+import s21_graph_algorithms
 
 enum MenuOption: Int, CaseIterable {
     case breadthFirstSearch = 1
@@ -156,7 +150,7 @@ class ConsoleApp {
                         } else {
                             print("Invalid choice. Please enter a number between 0 and \(MenuOption.allCases.count - 1).")
                         }
-                        sleep(2)
+//                        sleep(2)
                     }
                 }
             } else if let choice = readUserInput(), choice == 0 {
@@ -165,7 +159,7 @@ class ConsoleApp {
             } else {
                 print("Invalid choice. Please enter 1 to load the graph or 0 to exit.")
             }
-            sleep(2)
+//            sleep(2)
         }
     }
 }
