@@ -248,6 +248,11 @@ public class GraphAlgorithms {
         let alpha = 1.0 // Влияние феромонов
         let beta = 1.0 // Влияние эвристической информации
         
+        // Проверка связности графа
+        if !isGraphConnected(graph: graph) {
+            return nil
+        }
+        
         // Количество итераций и муравьев
         let numberOfIterations = 100
         let numberOfAnts = verticesCount
@@ -302,6 +307,25 @@ public class GraphAlgorithms {
         }
         // Возвращение результата - лучший найденный путь и его длина
         return TsmResult(vertices: bestPath, distance: bestDistance)
+    }
+    
+    // Проверка связности графа
+    func isGraphConnected(graph: Graph) -> Bool {
+        let verticesCount = graph.getVerticesCount()
+        var visited = [Bool](repeating: false, count: verticesCount)
+        
+        // Запуск DFS с первой вершины
+        func dfs(vertex: Int) {
+            visited[vertex] = true
+            for neighbor in 0..<verticesCount where graph.getAdjacencyMatrix()[vertex][neighbor] != 0 && !visited[neighbor] {
+                dfs(vertex: neighbor)
+            }
+        }
+        
+        dfs(vertex: 0)
+        
+        // Если все вершины посещены, граф связный
+        return visited.allSatisfy { $0 }
     }
     
     private func selectNextVertex(from currentVertex: Int, graph: Graph, pheromones: [[Double]], visited: Set<Int>, alpha: Double, beta: Double) -> Int {

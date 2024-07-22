@@ -109,6 +109,7 @@ final class GraphTests: XCTestCase {
         let algorithms = GraphAlgorithms()
         if let result = algorithms.solveTravelingSalesmanProblem(graph: graph) {
             XCTAssertEqual(result.distance, 80, "TSP did not return the expected result")
+            print(result.vertices, result.distance)
         } else {
             XCTFail("TSP did not return a result")
         }
@@ -195,8 +196,6 @@ final class GraphTests: XCTestCase {
 //        XCTAssertEqual(result, expected, "MST did not return the expected result for a disconnected graph")
 //    }
 
-    
-    // тут ошибка - надо фиксить
     func testSolveTravelingSalesmanProblem_DisconnectedGraph() throws {
         let adjacencyMatrix = [
             [0, 10, 0, 0],
@@ -378,6 +377,7 @@ final class GraphTests: XCTestCase {
         let algorithms = GraphAlgorithms()
         if let result = algorithms.solveTravelingSalesmanProblem(graph: graph) {
             XCTAssertEqual(result.distance, 70.0, accuracy: 1.0, "TSP did not return the expected result for a cyclic graph")
+            print(result.vertices, result.distance)
         } else {
             XCTFail("TSP did not return a result")
         }
