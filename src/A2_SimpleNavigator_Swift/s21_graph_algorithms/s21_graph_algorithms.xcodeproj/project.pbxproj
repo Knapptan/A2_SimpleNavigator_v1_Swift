@@ -9,12 +9,20 @@
 /* Begin PBXBuildFile section */
 		495A46112C4E84D70028903A /* s21_graph_algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A46102C4E84D70028903A /* s21_graph_algorithms.swift */; };
 		495A46182C4E92700028903A /* libs21_graph.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 495A46172C4E92700028903A /* libs21_graph.a */; };
+		495A463C2C50DD930028903A /* s21_stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A463B2C50DD930028903A /* s21_stack.swift */; };
+		495A463E2C50DDB20028903A /* s21_queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A463D2C50DDB20028903A /* s21_queue.swift */; };
+		495A46402C50DDC50028903A /* s21_pqueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A463F2C50DDC50028903A /* s21_pqueue.swift */; };
+		495A46422C50DDE50028903A /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A46412C50DDE50028903A /* models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		495A46042C4E84C60028903A /* libs21_graph_algorithms.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libs21_graph_algorithms.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		495A46102C4E84D70028903A /* s21_graph_algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_graph_algorithms.swift; sourceTree = "<group>"; };
 		495A46172C4E92700028903A /* libs21_graph.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libs21_graph.a; sourceTree = "<group>"; };
+		495A463B2C50DD930028903A /* s21_stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_stack.swift; sourceTree = "<group>"; };
+		495A463D2C50DDB20028903A /* s21_queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_queue.swift; sourceTree = "<group>"; };
+		495A463F2C50DDC50028903A /* s21_pqueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = s21_pqueue.swift; sourceTree = "<group>"; };
+		495A46412C50DDE50028903A /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				495A46102C4E84D70028903A /* s21_graph_algorithms.swift */,
+				495A463B2C50DD930028903A /* s21_stack.swift */,
+				495A463D2C50DDB20028903A /* s21_queue.swift */,
+				495A463F2C50DDC50028903A /* s21_pqueue.swift */,
+				495A46412C50DDE50028903A /* models.swift */,
 			);
 			path = s21_graph_algorithms;
 			sourceTree = "<group>";
@@ -99,6 +111,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					495A46032C4E84C60028903A = {
@@ -130,7 +143,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				495A46422C50DDE50028903A /* models.swift in Sources */,
 				495A46112C4E84D70028903A /* s21_graph_algorithms.swift in Sources */,
+				495A46402C50DDC50028903A /* s21_pqueue.swift in Sources */,
+				495A463C2C50DD930028903A /* s21_stack.swift in Sources */,
+				495A463E2C50DDB20028903A /* s21_queue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

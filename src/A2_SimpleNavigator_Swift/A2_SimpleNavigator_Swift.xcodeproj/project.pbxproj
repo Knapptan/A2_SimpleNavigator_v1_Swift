@@ -10,6 +10,8 @@
 		491CA89A2C03328800FA1743 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491CA8992C03328800FA1743 /* main.swift */; };
 		495A461B2C4E940D0028903A /* libs21_graph_algorithms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 495A461A2C4E940D0028903A /* libs21_graph_algorithms.a */; };
 		495A461F2C4E95670028903A /* libs21_graph.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 495A461E2C4E95670028903A /* libs21_graph.a */; };
+		495A465F2C50DFA90028903A /* libs21_graph_algorithms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 495A461A2C4E940D0028903A /* libs21_graph_algorithms.a */; };
+		495A46602C50DFA90028903A /* libs21_graph.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 495A461E2C4E95670028903A /* libs21_graph.a */; };
 		92FF62032C206AC700C22E92 /* GraphAlgorithmsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF62022C206AC700C22E92 /* GraphAlgorithmsTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +50,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				495A465F2C50DFA90028903A /* libs21_graph_algorithms.a in Frameworks */,
+				495A46602C50DFA90028903A /* libs21_graph.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,11 +360,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = School21.GraphTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INCLUDE_PATHS = "$(PROJECT_DIR)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -371,11 +380,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = School21.GraphTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INCLUDE_PATHS = "$(PROJECT_DIR)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

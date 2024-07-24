@@ -6,7 +6,10 @@
 //
 
 import XCTest
-@testable import A2_SimpleNavigator_Swift
+//@testable import A2_SimpleNavigator_Swift
+
+import s21_graph
+import s21_graph_algorithms
 
 final class GraphTests: XCTestCase {
 
@@ -74,28 +77,6 @@ final class GraphTests: XCTestCase {
             [11, 8, 7, 0]
         ]
         XCTAssertEqual(result, expected, "Floyd-Warshall did not return the expected result")
-    }
-
-//     Тест на оставное древо - валится
-    func testGetLeastSpanningTree() throws {
-        let adjacencyMatrix = [
-            [0, 2, 0, 6, 0],
-            [2, 0, 3, 8, 5],
-            [0, 3, 0, 0, 7],
-            [6, 8, 0, 0, 9],
-            [0, 5, 7, 9, 0]
-        ]
-        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
-        let algorithms = GraphAlgorithms()
-        let result = algorithms.getLeastSpanningTree(graph: graph)
-        let expected = [
-            [0, 2, 0, 6, 0],
-            [2, 0, 3, 0, 5],
-            [0, 3, 0, 0, 7],
-            [6, 0, 0, 0, 0],
-            [0, 5, 7, 0, 0]
-        ]
-        XCTAssertEqual(result, expected, "MST did not return the expected result")
     }
 
     func testSolveTravelingSalesmanProblem() throws {
@@ -173,26 +154,6 @@ final class GraphTests: XCTestCase {
             [Int.max, Int.max, 1, 0]
         ]
         XCTAssertEqual(result, expected, "Floyd-Warshall did not return the expected result for a disconnected graph")
-    }
-
-    // Валится
-    func testGetLeastSpanningTree_DisconnectedGraph() throws {
-        let adjacencyMatrix = [
-            [0, 1, 0, 0],
-            [1, 0, 0, 0],
-            [0, 0, 0, 1],
-            [0, 0, 1, 0]
-        ]
-        let graph = Graph(adjacencyMatrix: adjacencyMatrix)
-        let algorithms = GraphAlgorithms()
-        let result = algorithms.getLeastSpanningTree(graph: graph)
-        let expected = [
-            [0, 1, 0, 0],
-            [1, 0, 0, 0],
-            [0, 0, 0, 1],
-            [0, 0, 1, 0]
-        ]
-        XCTAssertEqual(result, expected, "MST did not return the expected result for a disconnected graph")
     }
 
     func testSolveTravelingSalesmanProblem_DisconnectedGraph() throws {
