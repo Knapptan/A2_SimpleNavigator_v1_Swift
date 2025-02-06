@@ -63,7 +63,7 @@
 ## 🛠 Инструкция по запуску  
 ### 📥 Клонирование репозитория:  
 ```sh
-git clone https://github.com/username/simple-navigator.git  
+git clone https://github.com/Knapptan/A2_SimpleNavigator_v1_Swift
 cd simple-navigator  
 ```
 
